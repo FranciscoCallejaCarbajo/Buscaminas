@@ -17,7 +17,7 @@ h1 {
 
 body::before {
     content: "";
-    background: url('Blue Illustration Game Presentation.jpg') no-repeat center center fixed;
+    background: url('fondoComienzoJuego.png') no-repeat center center fixed;
     background-size: cover;
     position: absolute; /* Asegura que cubra toda la página */
     top: 0;
