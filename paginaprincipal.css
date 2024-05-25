@@ -1,0 +1,29 @@
+h1 {
+    color: white;
+    font-size: 50px;
+    margin: 20px 0;
+    font-family: 'Press Start 2P', cursive; /* Aplica la fuente aquí */
+}
+
+.start-button {
+    background-color: #00ADD6;
+    font-family: 'Press Start 2P', cursive;
+    text-align: center;
+    border-radius: 10px;
+    font-size: 20px;
+    padding: 10px 20px;
+    color: white;
+}
+
+body::before {
+    content: "";
+    background: url('Blue Illustration Game Presentation.jpg') no-repeat center center fixed;
+    background-size: cover;
+    position: absolute; /* Asegura que cubra toda la página */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    opacity: 1.0;
+}
