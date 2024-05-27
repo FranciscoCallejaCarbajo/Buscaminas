@@ -62,9 +62,6 @@ body {
     border-radius: 40px;
 }
 
-.contenedor a:hover {
-}
-
 /* Responsive */
 
 @media (max-width: 1024px) {
