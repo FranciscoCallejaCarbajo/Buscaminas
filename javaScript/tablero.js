@@ -116,7 +116,7 @@ function refrescarTablero() {
         }
     }
 }
-
+//////////////////////////////////////////
 function verificarGanador() {
     for (let f = 0; f < filas; f++) {
         for (let c = 0; c < columnas; c++) {
@@ -128,6 +128,8 @@ function verificarGanador() {
 function verificarPerdedor() {
     // Lógica para verificar si el jugador ha perdido
 }
+///////////////////////
+
 
 function generarTableroJuego() {
     vaciarTablero();
