@@ -8,7 +8,7 @@
     display:grid;
     grid-template-columns: repeat(4, 32px);
     grid-template-rows: repeat(3, 32px);
-  } */
+  }
 
   #tablero div{
     background-color: #BBBBBB;
@@ -18,7 +18,7 @@
     border-bottom: 2px solid #A9A9A9;
     text-align: center;
     line-height: 32px;
-  }
+  } */
   
   #tablero{
     display:grid;
@@ -35,3 +35,4 @@
     text-align: center;
     line-height: var(--size);
   }
+  
