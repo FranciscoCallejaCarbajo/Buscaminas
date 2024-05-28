@@ -1,82 +1,15 @@
-/* Importar fuente arcade desde Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+#tablero{
+    display:grid;
+    grid-template-columns: repeat(4, 32px);
+    grid-template-rows: repeat(3, 32px);
+  }
 
-* {
-    transition: all 1s;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Press Start 2P', cursive;
-    margin: 0;
-    padding: 0;
-    user-select: none;
-    background: lightsteelblue;
-}
-
-table {
-    background: slategray;
-    margin: auto;
-}
-
-td {
-    border: rgba(0, 0, 0, 0.25) 1px solid;
+  #tablero div{
+    background-color: #BBBBBB;
+    border-left: 2px solid #D3D3D3;
+    border-top: 2px solid #D3D3D3;
+    border-right: 2px solid #A9A9A9;
+    border-bottom: 2px solid #A9A9A9;
     text-align: center;
-    font-size: 120%;
-    /* color: white; */
-    box-shadow: inset 3px 3px 0 0 rgba(255, 255, 255, 0.5),
-                        inset -3px -3px 0 0 rgba(0, 0, 0, 0.25);
-    width: 50px; /* Ajusta el ancho de las celdas */
-    height: 50px; /* Ajusta la altura de las celdas */
-    font-family: 'Press Start 2P', cursive; /* Aplicar la fuente arcade */
-}
-
-/* Alternar colores en patrón de tablero de ajedrez */
-tr:nth-child(odd) td:nth-child(even),
-tr:nth-child(even) td:nth-child(odd) {
-    background-color: rgb(92, 91, 91);
-}
-
-tr:nth-child(odd) td:nth-child(odd),
-tr:nth-child(even) td:nth-child(even) {
-    background-color: white;
-}
-
-/* Colores para los números */
-.number-1 {
-    color: blue;
-}
-
-.number-2 {
-    color: green;
-}
-
-.number-3 {
-    color: red;
-}
-
-.number-4 {
-    color: darkblue;
-}
-
-.number-5 {
-    color: brown;
-}
-
-.number-6 {
-    color: cyan;
-}
-
-.number-7 {
-    color: black;
-}
-
-.number-8 {
-    color: gray;
-}
-
-/* Estilo adicional para dar efecto arcade */
-.number {
-    font-family: 'Press Start 2P', cursive; /* Fuente arcade */
-    text-shadow: 2px 2px 0 #000, -2px 2px 0 #000, 2px -2px 0 #000, -2px -2px 0 #000; /* Sombra de texto arcade */
-}
+    line-height: 32px;
+  }
