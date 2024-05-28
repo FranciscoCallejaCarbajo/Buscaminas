@@ -1,0 +1,25 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    font-family: press star;
+    color:white;
+    font-size: 3.7em;
+    font-family: 'Press Start 2P', cursive;
+    text-align: center;
+    margin-top: -50px;
+    margin-left: -100px;
+}
+
+body {
+    background: url(../img/BlueIllustrationGamePresentation.png)no-repeat;
+    background-size: 100%;
+    overflow: hidden;
+}
+
+h2 {
+    color: purple;
+    font-family:'Press Start 2P', cursive;
+}
