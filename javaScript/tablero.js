@@ -16,6 +16,7 @@ function inicio(){
     generarCampoMinasVacio();
     esparcirMinas();
     contarMinas();
+    actualizarNumMinasRestantes();
 }
 
 // Esta funcion crea el tablero automaticamente
@@ -79,6 +80,8 @@ function marcar(miEvento){
                 if (buscaminas.numMinasEncontradas == buscaminas.numMinasTotales){
                     buscaminas.resolverTablero(true);
                 }
+             //actualizamos la barra de estado con el numero de minas restantes
+             actualizarNumMinasRestantes();
             }
         }
     }
@@ -226,6 +229,47 @@ function contarMinas(){
     }
 }
 
+function actualizarNumMinasRestantes(){
+    document.querySelector("#numMinasRestantes").innerHTML =
+        (buscaminas.numMinasTotales - buscaminas.numMinasEncontradas);
+}
+
+function resolverTablero(isOK){
+    let aCasillas = tablero.children;
+    for (let i = 0 ; i < aCasillas.length; i++){
+        //quitamos los listeners de los eventos a las casillas
+        aCasillas[i].removeEventListener("click", destapar);
+        aCasillas[i].removeEventListener("contextmenu", marcar);
+
+        let fila = parseInt(aCasillas[i].dataset.fila,10);
+        let columna = parseInt(aCasillas[i].dataset.columna,10);
+
+        if (aCasillas[i].classList.contains("icon-bandera")){
+            if (buscaminas.aCampoMinas[fila][columna] == "B"){
+                //bandera correcta
+                aCasillas[i].classList.add("destapado");
+                aCasillas[i].classList.remove("icon-bandera");
+                aCasillas[i].classList.add("icon-bomba");
+            } else {
+                //bandera erronea
+                aCasillas[i].classList.add("destapado");
+                aCasillas[i].classList.add("banderaErronea");
+                isOK = false;
+            }
+        } else if (!aCasillas[i].classList.contains("destapado")){
+            if (buscaminas.aCampoMinas[fila][columna] == "B"){
+                //destapamos el resto de las bombas
+                aCasillas[i].classList.add("destapado");
+                aCasillas[i].classList.add("icon-bomba");
+            }
+        }
+
+    }
+
+    if (isOK){
+        alert("¡¡¡Enhorabuena!!!");
+    }
+}
 
 
 //este while borra los div predeterminados del html
