@@ -1,23 +1,12 @@
 const buscaminas = {
 
-    numMinasTotales: 30,
+    numMinasTotales: 0,
     numMinasEncontradas: 0,
-    numFilas: 15,
-    numColumnas: 15,
+    numFilas: 0,
+    numColumnas: 0,
     aCampoMinas: []
 }
 
-function inicio(){
-    //RETOCAR (crear input interactivo / interfac )
-    buscaminas.numFilas = 10;
-    buscaminas.numColumnas = 10;
-    buscaminas.numMinasTotales = 12;
-    pintarTablero();
-    generarCampoMinasVacio();
-    esparcirMinas();
-    contarMinas();
-    actualizarNumMinasRestantes();
-}
 
 // Esta funcion crea el tablero automaticamente
 function pintarTablero(numFilas,numColumnas){
@@ -27,6 +16,15 @@ function pintarTablero(numFilas,numColumnas){
     //Con esto colocamos en las variables CSS lo que recibimos como parametros de entrada de la funcion
     document.querySelector("html").style.setProperty("--num-filas",numFilas);
     document.querySelector("html").style.setProperty("--num-columnas",numColumnas);
+
+    //este while borra los div predeterminados del html
+    //borramos el tablero actual
+    while (tablero.firstChild) {
+        tablero.firstChild.addEventListener("contextmenu",marcar);
+        tablero.firstChild.addEventListener("click", destapar);
+        tablero.removeChild(tablero.firstChild);
+
+    }
 
     // el problema de que se repita un monton de filas viene de aqui
     for (let f = 0; f < buscaminas.numFilas; f++) {
@@ -41,7 +39,79 @@ function pintarTablero(numFilas,numColumnas){
             tablero.appendChild(newDiv);
         }
     }
+
 }
+
+//Genera minas 
+function generarCampoMinasVacio(){
+    //generamos el campo de minas en el objeto buscaminas
+    buscaminas.aCampoMinas = new Array(buscaminas.numFilas);
+    for (let fila=0; fila<buscaminas.numFilas; fila++){
+        buscaminas.aCampoMinas[fila] = new Array(buscaminas.numColumnas);
+    }
+}
+
+
+function esparcirMinas(){
+    //repartimos de forma aleatoria las minas
+    let numMinasEsparcidas = 0;
+    
+    while (numMinasEsparcidas<buscaminas.numMinasTotales){
+        //numero aleatorio en el intervalo [0,numFilas-1]
+        let fila = Math.floor(Math.random() * buscaminas.numFilas);
+
+        //numero aleatorio en el intervalo [0,numColumnas-1]
+        let columna = Math.floor(Math.random() * buscaminas.numColumnas);
+
+        //si no hay bomba en esa posicion
+        if (buscaminas.aCampoMinas[fila][columna] != "B"){
+            //la ponemos
+            buscaminas.aCampoMinas[fila][columna] = "B";
+
+            //y sumamos 1 a las bombas esparcidas
+            numMinasEsparcidas++;
+        }
+    }
+}
+
+function contarMinasAlrededorCasilla(fila,columna){
+    let numeroMinasAlrededor = 0;
+
+    //de la fila anterior a la posterior
+    for (let zFila = fila-1; zFila <= fila+1; zFila++){
+
+        //de la columna anterior a la posterior
+        for (let zColumna = columna-1; zColumna <= columna+1; zColumna++){
+
+            //si la casilla cae dentro del tablero
+            if (zFila>-1 && zFila<buscaminas.numFilas && zColumna>-1 && zColumna<buscaminas.numColumnas){
+
+                //miramos si en esa posición hay bomba
+                if (buscaminas.aCampoMinas[zFila][zColumna]=="B"){
+
+                    //y sumamos 1 al numero de minas que hay alrededor de esa casilla
+                    numeroMinasAlrededor++;
+                }
+            }
+        }
+    }
+    //y guardamos cuantas minas hay en esa posicion
+    buscaminas.aCampoMinas[fila][columna] = numeroMinasAlrededor;
+}
+
+
+function contarMinas(){
+    //contamos cuantas minas hay alrededor de cada casilla
+    for (let fila=0; fila<buscaminas.numFilas; fila++){
+        for (let columna=0; columna<buscaminas.numColumnas; columna++){
+            //solo contamos si es distinto de bomba
+            if (buscaminas.aCampoMinas[fila][columna]!="B"){
+                contarMinasAlrededorCasilla(fila,columna);
+            }
+        }
+    }
+}
+
 
 
 function marcar(miEvento){
@@ -159,81 +229,6 @@ function destaparCasilla(fila, columna){
 }
 
 
-
-//Genera minas 
-function generarCampoMinasVacio(){
-    //generamos el campo de minas en el objeto buscaminas
-    buscaminas.aCampoMinas = new Array(buscaminas.numFilas);
-    for (let fila=0; fila<buscaminas.numFilas; fila++){
-        buscaminas.aCampoMinas[fila] = new Array(buscaminas.numColumnas);
-    }
-}
-
-
-function esparcirMinas(){
-    //repartimos de forma aleatoria las minas
-    let numMinasEsparcidas = 0;
-    
-    while (numMinasEsparcidas<buscaminas.numMinasTotales){
-        //numero aleatorio en el intervalo [0,numFilas-1]
-        let fila    = Math.floor(Math.random() * buscaminas.numFilas);
-
-        //numero aleatorio en el intervalo [0,numColumnas-1]
-        let columna = Math.floor(Math.random() * buscaminas.numColumnas);
-
-        //si no hay bomba en esa posicion
-        if (buscaminas.aCampoMinas[fila][columna] != "B"){
-            //la ponemos
-            buscaminas.aCampoMinas[fila][columna] = "B";
-
-            //y sumamos 1 a las bombas esparcidas
-            numMinasEsparcidas++;
-        }
-    }
-}
-
-function contarMinasAlrededorCasilla(fila,columna){
-    let numeroMinasAlrededor = 0;
-
-    //de la fila anterior a la posterior
-    for (let zFila = fila-1; zFila <= fila+1; zFila++){
-
-        //de la columna anterior a la posterior
-        for (let zColumna = columna-1; zColumna <= columna+1; zColumna++){
-
-            //si la casilla cae dentro del tablero
-            if (zFila>-1 && zFila<buscaminas.numFilas && zColumna>-1 && zColumna<buscaminas.numColumnas){
-
-                //miramos si en esa posición hay bomba
-                if (buscaminas.aCampoMinas[zFila][zColumna]=="B"){
-
-                    //y sumamos 1 al numero de minas que hay alrededor de esa casilla
-                    numeroMinasAlrededor++;
-                }
-            }
-        }
-    }
-    //y guardamos cuantas minas hay en esa posicion
-    buscaminas.aCampoMinas[fila][columna] = numeroMinasAlrededor;
-}
-
-function contarMinas(){
-    //contamos cuantas minas hay alrededor de cada casilla
-    for (let fila=0; fila<buscaminas.numFilas; fila++){
-        for (let columna=0; columna<buscaminas.numColumnas; columna++){
-            //solo contamos si es distinto de bomba
-            if (buscaminas.aCampoMinas[fila][columna]!="B"){
-                contarMinasAlrededorCasilla(fila,columna);
-            }
-        }
-    }
-}
-
-function actualizarNumMinasRestantes(){
-    document.querySelector("#numMinasRestantes").innerHTML =
-        (buscaminas.numMinasTotales - buscaminas.numMinasEncontradas);
-}
-
 function resolverTablero(isOK){
     let aCasillas = tablero.children;
     for (let i = 0 ; i < aCasillas.length; i++){
@@ -272,13 +267,21 @@ function resolverTablero(isOK){
 }
 
 
-//este while borra los div predeterminados del html
-//borramos el tablero actual
-while (tablero.firstChild) {
-    tablero.firstChild.addEventListener("contextmenu",marcar);
-    tablero.firstChild.addEventListener("click", destapar);
-    tablero.removeChild(tablero.firstChild);
+function actualizarNumMinasRestantes(){
+    document.querySelector("#numMinasRestantes").innerHTML =
+        (buscaminas.numMinasTotales - buscaminas.numMinasEncontradas);
+}
 
+function inicio(){
+    //RETOCAR (crear input interactivo / interfac )
+    buscaminas.numFilas = 10;
+    buscaminas.numColumnas = 10;
+    buscaminas.numMinasTotales = 12;
+    pintarTablero();
+    generarCampoMinasVacio();
+    esparcirMinas();
+    contarMinas();
+    actualizarNumMinasRestantes();
 }
 
 window.onload = inicio;
