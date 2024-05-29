@@ -1,5 +1,4 @@
 const buscaminas = {
-
     numMinasTotales: 0,
     numMinasEncontradas: 0,
     numFilas: 0,
@@ -9,13 +8,14 @@ const buscaminas = {
 
 
 // Esta funcion crea el tablero automaticamente
-function pintarTablero(numFilas,numColumnas){
+function pintarTablero(){
     //obatiene el elemento del tablero por su id y lo guarda en la variable tablero
     let tablero = document.querySelector("#tablero");
 
     //Con esto colocamos en las variables CSS lo que recibimos como parametros de entrada de la funcion
-    document.querySelector("html").style.setProperty("--num-filas",numFilas);
-    document.querySelector("html").style.setProperty("--num-columnas",numColumnas);
+    document.querySelector("html").style.setProperty("--num-filas",buscaminas.numFilas);
+    //el problema estaba aqui esque llamavamos el numero de filas y columnas pero no por el objeto si no con las variables que le habiamos metido a la funcion
+    document.querySelector("html").style.setProperty("--num-columnas",buscaminas.numColumnas);
 
     //este while borra los div predeterminados del html
     //borramos el tablero actual
