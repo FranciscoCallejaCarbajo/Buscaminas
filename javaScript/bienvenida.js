@@ -19,3 +19,5 @@ function borrarTexto (elemento){
 
 // Ejecutar la funcion texto
 efecto(mensaje,texto);
+
+

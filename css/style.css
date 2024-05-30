@@ -4,15 +4,16 @@
 }
 body {
     background: url(/img/fondo1.png) no-repeat;
-    background-size: 100% 100%;
+    background-size:100vw 100vh;
     overflow: hidden;
+
 
     font-family: "Silkscreen", sans-serif;
     font-weight: 400;
     font-style: normal;
 }
 .contenedor {
-    height: 100vh;
+    height: 87vh;
     width: 100vw;
     display: flex;
     justify-content: center;
@@ -54,11 +55,28 @@ body {
     font-size: 3em;
 }
 
-/* coches */
 
-.coches {
-    
+
+#carretera {
+    display: flex;
+    height: 9vh;
+    flex-direction: row;
+    align-items: bottom;
+    width: 100vw;
 }
+#coche{
+    margin-left: 30vw;
+    margin-bottom: 0;
+
+}
+#autobus{ 
+    height:fit-content;
+    margin-left: 30vw;
+}
+#cocheVuelta{
+    margin-right: 10vw;
+}
+
 
 /* Responsive */
 
