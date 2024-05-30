@@ -127,8 +127,8 @@ function marcar(miEvento){
         miEvento.preventDefault();
 
         //obtenemos la fila de las propiedades dataset.
-        let fila = parseInt(casilla.dataset.fila,10);
-        let columna = parseInt(casilla.dataset.columna,10);
+        let fila = parseInt(casilla.dataset.fila,2);
+        let columna = parseInt(casilla.dataset.columna,2);
         
         if (fila>=0 && columna>=0 && fila< buscaminas.numFilas && columna < buscaminas.numColumnas) {
             //si esta marcada como "bandera"
@@ -163,8 +163,8 @@ function marcar(miEvento){
 function destapar(miEvento){
     if (miEvento.type === "click"){
         let casilla = miEvento.currentTarget;
-        let fila = parseInt(casilla.dataset.fila,10);
-        let columna = parseInt(casilla.dataset.columna,10);
+        let fila = parseInt(casilla.dataset.fila,2);
+        let columna = parseInt(casilla.dataset.columna,2);
 
         destaparCasilla(fila,columna);
     }
@@ -232,42 +232,49 @@ function destaparCasilla(fila, columna){
 }
 
 
-function resolverTablero(isOK){
+function resolverTablero(isOK) {
     let aCasillas = tablero.children;
-    for (let i = 0 ; i < aCasillas.length; i++){
-        //quitamos los listeners de los eventos a las casillas
+    for (let i = 0; i < aCasillas.length; i++) {
+        // Quitamos los listeners de los eventos a las casillas
         aCasillas[i].removeEventListener("click", destapar);
         aCasillas[i].removeEventListener("contextmenu", marcar);
 
-        let fila = parseInt(aCasillas[i].dataset.fila,10);
-        let columna = parseInt(aCasillas[i].dataset.columna,10);
+        let fila = parseInt(aCasillas[i].dataset.fila, 2);
+        let columna = parseInt(aCasillas[i].dataset.columna, 2);
 
-        if (aCasillas[i].classList.contains("icon-bandera")){
-            if (buscaminas.aCampoMinas[fila][columna] == "B"){
-                //bandera correcta
+        if (aCasillas[i].classList.contains("icon-bandera")) {
+            if (buscaminas.aCampoMinas[fila][columna] == "B") {
+                // Bandera correcta
                 aCasillas[i].classList.add("destapado");
                 aCasillas[i].classList.remove("icon-bandera");
                 aCasillas[i].classList.add("icon-bomba");
             } else {
-                //bandera erronea
+                // Bandera errónea
                 aCasillas[i].classList.add("destapado");
                 aCasillas[i].classList.add("banderaErronea");
                 isOK = false;
             }
-        } else if (!aCasillas[i].classList.contains("destapado")){
-            if (buscaminas.aCampoMinas[fila][columna] == "B"){
-                //destapamos el resto de las bombas
+        } else if (!aCasillas[i].classList.contains("destapado")) {
+            if (buscaminas.aCampoMinas[fila][columna] == "B") {
+                // Destapamos el resto de las bombas
                 aCasillas[i].classList.add("destapado");
                 aCasillas[i].classList.add("icon-bomba");
             }
         }
-
     }
 
-    if (isOK){
-        alert("¡¡¡Enhorabuena!!!");
+    if (isOK) {
+        // Mostrar el mensaje de felicitación
+        let mensajeFelicidades = document.getElementById("mensajeFelicidades");
+        mensajeFelicidades.style.display = "block";
+
+        // Ocultar el mensaje y los fuegos artificiales después de 5 segundos
+        setTimeout(() => {
+            mensajeFelicidades.style.display = "none";
+        }, 5000);
     }
 }
+
 
 
 function actualizarNumMinasRestantes(){
@@ -277,9 +284,9 @@ function actualizarNumMinasRestantes(){
 
 function inicio(){
     //RETOCAR (crear input interactivo / interfac )
-    buscaminas.numFilas = 10;
-    buscaminas.numColumnas = 10;
-    buscaminas.numMinasTotales = 12;
+    buscaminas.numFilas = 2;
+    buscaminas.numColumnas = 2;
+    buscaminas.numMinasTotales = 2;
     pintarTablero();
     generarCampoMinasVacio();
     esparcirMinas();
