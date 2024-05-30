@@ -93,9 +93,11 @@ function contarMinasAlrededorCasilla(fila,columna){
             }
         }
     }
+
     //y guardamos cuantas minas hay en esa posicion
     buscaminas.aCampoMinas[fila][columna] = numeroMinasAlrededor;
 }
+
 
 
 function contarMinas(){
@@ -112,6 +114,7 @@ function contarMinas(){
 
 
 
+
 function marcar(miEvento){
     if (miEvento.type === "contextmenu"){
         console.log(miEvento);
@@ -124,8 +127,8 @@ function marcar(miEvento){
         miEvento.preventDefault();
 
         //obtenemos la fila de las propiedades dataset.
-        let fila = casilla.dataset.fila;
-        let columna = casilla.dataset.columna;
+        let fila = parseInt(casilla.dataset.fila,10);
+        let columna = parseInt(casilla.dataset.columna,10);
         
         if (fila>=0 && columna>=0 && fila< buscaminas.numFilas && columna < buscaminas.numColumnas) {
             //si esta marcada como "bandera"
@@ -146,11 +149,13 @@ function marcar(miEvento){
                 buscaminas.numMinasEncontradas++;
                 //si es igual al numero de minas totales resolvemos el tablero para ver si esta bien
                 if (buscaminas.numMinasEncontradas == buscaminas.numMinasTotales){
-                    buscaminas.resolverTablero(true);
+                    resolverTablero(true);
                 }
-             //actualizamos la barra de estado con el numero de minas restantes
-             actualizarNumMinasRestantes();
+             
             }
+            //actualizamos la barra de estado con el numero de minas restantes
+            actualizarNumMinasRestantes();
+            
         }
     }
 }
