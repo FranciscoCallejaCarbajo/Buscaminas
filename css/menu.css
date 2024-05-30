@@ -14,12 +14,12 @@ h1 {
 }
 
 body {
-    background: url(../img/BlueIllustrationGamePresentation.png)no-repeat;
-    background-size: 100%;
+    background: url(/img/BlueIllustrationGamePresentation.png)no-repeat;
+    background-size: 100vw 100vh;
     overflow: hidden;
 }
 
 h2 {
     color: #CD6DFE;
     font-family:'Press Start 2P', cursive;
-}
+    font-size: 22px;}
