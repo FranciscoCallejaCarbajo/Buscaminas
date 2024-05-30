@@ -233,6 +233,10 @@ function destaparCasilla(fila, columna){
 
 
 function resolverTablero(isOK) {
+    let mensajeFelicidades = document.getElementById("mensajeFelicidades");
+    let btnReset = document.getElementById("btnReset");
+    let fireworksContainer = document.getElementById("fireworksContainer");
+
     let aCasillas = tablero.children;
     for (let i = 0; i < aCasillas.length; i++) {
         // Quitamos los listeners de los eventos a las casillas
@@ -264,22 +268,33 @@ function resolverTablero(isOK) {
     }
 
     if (isOK) {
-        // Mostrar el mensaje de felicitación
-        let mensajeFelicidades = document.getElementById("mensajeFelicidades");
+        // Mostrar el mensaje de felicitación y el botón de reinicio
         mensajeFelicidades.style.display = "block";
+        btnReset.style.display = "block";
 
-        // Ocultar el mensaje y los fuegos artificiales después de 5 segundos
+        // Ocultar el mensaje, el botón de reinicio y los fuegos artificiales después de 5 segundos
         setTimeout(() => {
             mensajeFelicidades.style.display = "none";
-        }, 5000);
+            btnReset.style.display = "none";
+        }, 10000);
     }
 }
+
 
 
 
 function actualizarNumMinasRestantes(){
     document.querySelector("#numMinasRestantes").innerHTML =
         (buscaminas.numMinasTotales - buscaminas.numMinasEncontradas);
+}
+
+function reiniciarJuego() {
+    // Ocultar el mensaje de felicitación
+    let mensajeFelicidades = document.getElementById("mensajeFelicidades");
+    mensajeFelicidades.style.display = "none";
+
+    // Reiniciar el juego
+    inicio();
 }
 
 function inicio(){
@@ -292,6 +307,9 @@ function inicio(){
     esparcirMinas();
     contarMinas();
     actualizarNumMinasRestantes();
+    // Agregar evento de click al botón de reinicio
+    let btnReset = document.getElementById("btnReset");
+    btnReset.addEventListener("click", reiniciarJuego);
 }
 
 window.onload = inicio;
