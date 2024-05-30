@@ -20,10 +20,9 @@ function pintarTablero(){
     //este while borra los div predeterminados del html
     //borramos el tablero actual
     while (tablero.firstChild) {
-        tablero.firstChild.addEventListener("contextmenu",marcar);
-        tablero.firstChild.addEventListener("click", destapar);
+        tablero.firstChild.removeEventListener("contextmenu",marcar);// teniamos addEventListener
+        tablero.firstChild.removeEventListener("click",destapar); // teniamos addEventListener
         tablero.removeChild(tablero.firstChild);
-
     }
 
     // el problema de que se repita un monton de filas viene de aqui
@@ -31,11 +30,11 @@ function pintarTablero(){
         for (let c = 0; c < buscaminas.numColumnas; c++) {
             let newDiv = document.createElement("div");
 
-            newDiv.setAttribute("id","f", + f + "_c" + c);
+            newDiv.setAttribute("id","f" + f + "_c" + c );
             newDiv.dataset.fila = f;
             newDiv.dataset.columna = c;
             newDiv.addEventListener("contextmenu",marcar);//evento con el boton derecho del raton
-            newDiv.addEventListener("click", destapar);//evento con el boton izquierdo del raton
+            newDiv.addEventListener("click",destapar);//evento con el boton izquierdo del raton
             tablero.appendChild(newDiv);
         }
     }
@@ -50,7 +49,6 @@ function generarCampoMinasVacio(){
         buscaminas.aCampoMinas[fila] = new Array(buscaminas.numColumnas);
     }
 }
-
 
 function esparcirMinas(){
     //repartimos de forma aleatoria las minas
@@ -160,8 +158,8 @@ function marcar(miEvento){
 function destapar(miEvento){
     if (miEvento.type === "click"){
         let casilla = miEvento.currentTarget;
-        let fila = casilla.dataset.fila;
-        let columna = casilla.dataset.columna;
+        let fila = parseInt(casilla.dataset.fila,10);
+        let columna = parseInt(casilla.dataset.columna,10);
 
         destaparCasilla(fila,columna);
     }
@@ -169,12 +167,12 @@ function destapar(miEvento){
 
 // Esta funcion se encarga de llamar la funcion destapar
 function destaparCasilla(fila, columna){
-    console.log("destapamos la casilla con fila " + fila + " y columna " +columna );
-
+    
     //si la casilla esta dentro del tablero
     if (fila > -1 && fila < buscaminas.numFilas &&
         columna >-1 && columna < buscaminas.numColumnas){
-
+            
+    console.log("destapamos la casilla con fila " + fila + " y columna " +columna );
         //obtenermos la casilla con la fila y columna
         let casilla = document.querySelector("#f" + fila + "_c" + columna);
 
