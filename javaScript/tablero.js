@@ -127,8 +127,8 @@ function marcar(miEvento){
         miEvento.preventDefault();
 
         //obtenemos la fila de las propiedades dataset.
-        let fila = parseInt(casilla.dataset.fila,2);
-        let columna = parseInt(casilla.dataset.columna,2);
+        let fila = parseInt(casilla.dataset.fila,0);
+        let columna = parseInt(casilla.dataset.columna,0);
         
         if (fila>=0 && columna>=0 && fila< buscaminas.numFilas && columna < buscaminas.numColumnas) {
             //si esta marcada como "bandera"
@@ -163,8 +163,8 @@ function marcar(miEvento){
 function destapar(miEvento){
     if (miEvento.type === "click"){
         let casilla = miEvento.currentTarget;
-        let fila = parseInt(casilla.dataset.fila,2);
-        let columna = parseInt(casilla.dataset.columna,2);
+        let fila = parseInt(casilla.dataset.fila,0);
+        let columna = parseInt(casilla.dataset.columna,0);
 
         destaparCasilla(fila,columna);
     }
@@ -243,8 +243,8 @@ function resolverTablero(isOK) {
         aCasillas[i].removeEventListener("click", destapar);
         aCasillas[i].removeEventListener("contextmenu", marcar);
 
-        let fila = parseInt(aCasillas[i].dataset.fila, 2);
-        let columna = parseInt(aCasillas[i].dataset.columna, 2);
+        let fila = parseInt(aCasillas[i].dataset.fila, 0);
+        let columna = parseInt(aCasillas[i].dataset.columna, 0);
 
         if (aCasillas[i].classList.contains("icon-bandera")) {
             if (buscaminas.aCampoMinas[fila][columna] == "B") {
@@ -296,8 +296,8 @@ function reiniciarJuego() {
     // Reiniciar el juego
     inicio();
 }
-
-function inicio(){
+// Funcion iniciar el juego con parametros exactos (recordar cambiar los '0' en las partes de arriba )
+/* function inicio(){
     //RETOCAR (crear input interactivo / interfac )
     buscaminas.numFilas = 2;
     buscaminas.numColumnas = 2;
@@ -307,9 +307,24 @@ function inicio(){
     esparcirMinas();
     contarMinas();
     actualizarNumMinasRestantes();
-    // Agregar evento de click al botón de reinicio
-    let btnReset = document.getElementById("btnReset");
-    btnReset.addEventListener("click", reiniciarJuego);
+} */
+
+/* window.onload = inicio; */
+
+function inicio() {
+    let numFilasInput = document.getElementById("numFilas");
+    let numColumnasInput = document.getElementById("numColumnas");
+    let numMinasTotalesInput = document.getElementById("numMinasTotales");
+
+    buscaminas.numFilas = parseInt(numFilasInput.value, 10);
+    buscaminas.numColumnas = parseInt(numColumnasInput.value, 10);
+    buscaminas.numMinasTotales = parseInt(numMinasTotalesInput.value, 10);
+
+    pintarTablero();
+    generarCampoMinasVacio();
+    esparcirMinas();
+    contarMinas();
+    actualizarNumMinasRestantes();
 }
 
-window.onload = inicio;
+document.getElementById("iniciarJuego").addEventListener("click", inicio);
