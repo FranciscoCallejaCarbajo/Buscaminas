@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Eliminar Elemento con JS</title>
+</head>
+<body>
+  <div id="elementoAEliminar">Este es el elemento que será eliminado</div>
+  <button onclick="eliminarElemento()">Eliminar</button>
+
+  <script>
+    function eliminarElemento() {
+      var elemento = document.getElementById("elementoAEliminar");
+      if (elemento) {
+        elemento.remove();
+      }
+    }
+  </script>
+</body>
+</html>
