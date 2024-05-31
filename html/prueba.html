@@ -1,18 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Eliminar Elemento con JS</title>
+  <title>Invertir Imagen con JS</title>
+  <style>
+    .invertida {
+      transform: scaleX(-1);
+    }
+  </style>
 </head>
 <body>
-  <div id="elementoAEliminar">Este es el elemento que será eliminado</div>
-  <button onclick="eliminarElemento()">Eliminar</button>
+  <img id="miImagen" src="/img/autobus.png" alt="Imagen">
+  <button onclick="invertirImagen()">Invertir Imagen</button>
 
   <script>
-    function eliminarElemento() {
-      var elemento = document.getElementById("elementoAEliminar");
-      if (elemento) {
-        elemento.remove();
-      }
+    function invertirImagen() {
+      var imagen = document.getElementById("miImagen");
+      imagen.classList.toggle("invertida");
     }
   </script>
 </body>
