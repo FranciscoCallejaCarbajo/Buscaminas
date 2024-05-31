@@ -65,5 +65,5 @@ invertirImagenAutobus()
 vuelta()
 
 
-efecto(mensaje,texto);
+
 
