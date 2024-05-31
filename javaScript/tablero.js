@@ -296,26 +296,32 @@ function reiniciarJuego() {
     // Reiniciar el juego
     inicio();
 }
-// Funcion iniciar el juego con parametros exactos (recordar cambiar los '0' en las partes de arriba )
-/* function inicio(){
-    //RETOCAR (crear input interactivo / interfac )
-    buscaminas.numFilas = 2;
-    buscaminas.numColumnas = 2;
-    buscaminas.numMinasTotales = 2;
+// Funcion iniciar el juego con parametros exactos (Si quisieramos cambiar los parametros para que salga de otro tamaño cambiarlos aqui...)
+function inicio(){
+    buscaminas.numFilas = 10;
+    buscaminas.numColumnas = 10;
+    buscaminas.numMinasTotales = 12;
     pintarTablero();
     generarCampoMinasVacio();
     esparcirMinas();
     contarMinas();
     actualizarNumMinasRestantes();
-} */
+}
 
-/* window.onload = inicio; */
+window.onload = inicio;
 
-function inicio() {
+// Esto es para el boton de jugar con mas celdas etc
+
+document.getElementById("abrirJugarMas").addEventListener("click", function() {
+    document.getElementById("formContainer").classList.toggle("hidden");
+});
+
+function inicioBoton() {
+
+// Obtener los campos de entrada por el click
     let numFilasInput = document.getElementById("numFilas");
     let numColumnasInput = document.getElementById("numColumnas");
     let numMinasTotalesInput = document.getElementById("numMinasTotales");
-
     buscaminas.numFilas = parseInt(numFilasInput.value, 10);
     buscaminas.numColumnas = parseInt(numColumnasInput.value, 10);
     buscaminas.numMinasTotales = parseInt(numMinasTotalesInput.value, 10);
@@ -327,4 +333,4 @@ function inicio() {
     actualizarNumMinasRestantes();
 }
 
-document.getElementById("iniciarJuego").addEventListener("click", inicio);
+document.getElementById("iniciarJuego").addEventListener("click", inicioBoton);
