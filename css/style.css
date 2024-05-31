@@ -59,19 +59,28 @@ body {
 
 #carretera {
     display: flex;
+    align-items: flex-start;
     height: 9vh;
     flex-direction: row;
-    align-items: bottom;
     width: 100vw;
 }
 #coche{
-    margin-left: 30vw;
+    /* margin-left: 1vw; */
+    align-self: flex-end;
+    margin-right: 1px;
     margin-bottom: 0;
+    order: 3;
+    transform: scaleX(1);
 
 }
 #autobus{ 
     height:fit-content;
-    margin-left: 30vw;
+    margin-left: 20vw;
+    order: 2;
+    display: none;
+    transform: scaleX(-1);
+    
+    
 }
 #cocheVuelta{
     margin-right: 10vw;
