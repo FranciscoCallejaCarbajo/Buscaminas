@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -49,9 +48,9 @@
 <div id="container"><h2 style="margin: 0; padding-top: 20px; margin-left: 20px;">Tetris</h2>
 </div>
 <script>
-let i = 0;
-var txt = 'Select a Game'
-var speed = 900;
+    // let i = 0;
+    var txt = 'Select a Game'
+    var speed = 900;
 
 function typeWriter () {
     if (i <txt.length) {
@@ -63,70 +62,4 @@ function typeWriter () {
 typeWriter();
 </script>
 </body>
-=======
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menu principal</title>
-    <style>
-    a {
-        color:blueviolet;
-    }
-    </style>
-    <link rel="stylesheet" href="/css/menu.css">
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-</head>
-<body>
-<br>
-<br>
-<br>
-<br>
-<br>
-<div class="spacer-10" style="min-height: 130px;">
-<h1 id="texto"></h1> 
-</div>
-<!-- <div>
-    <h2>Buscaminas</h2>
-</div> -->
-<style>
-    #container {
-        background-image: url("/img/cuadroTxt.png");
-        background-repeat: no-repeat;
-        min-height: 70px;
-        min-width: 254px;
-        height: 70px;
-        width: 254px;
-        margin-left: 200px;
-    }
-</style>
-<div id="container" >
-<a href="http://127.0.0.1:3000/html/tablero.html" style="color:rgb(82, 8, 151)"><h2 style="margin: 0; padding-top: 20px; margin-left: 18px; ">Buscaminas</h2></a>
-    <!-- <img src="/img/cuadroTxt.png" alt="Cuadro de Texto"> -->
-</div>
-<br>
-<br>
-<div id="container"><h2 style="margin: 0; padding-top: 20px; margin-left: 20px;">Ahorcado</h2>
-</div>
-<br>
-<br>
-<div id="container"><h2 style="margin: 0; padding-top: 20px; margin-left: 20px;">Tetris</h2>
-</div>
-<script>
-let i = 0;
-var txt = 'Select a Game'
-var speed = 900;
-
-function typeWriter () {
-    if (i <txt.length) {
-        document.getElementById("texto").innerHTML += txt.charAt(i);
-        i++;
-        setTimeout(typeWriter, speed);
-    }
-}
-typeWriter();
-</script>
-</body>
->>>>>>> ab82e905794e78c044f40b8b2a8225eabcf83f36
 </html>
