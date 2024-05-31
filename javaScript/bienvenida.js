@@ -64,3 +64,6 @@ movimiento()
 invertirImagenAutobus()
 vuelta()
 
+=======
+efecto(mensaje,texto);
+>>>>>>> 3e91fa9492a1d7fd279e4b07563567b08c0f2a77

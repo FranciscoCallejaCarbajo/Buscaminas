@@ -20,10 +20,9 @@ function pintarTablero(){
     //este while borra los div predeterminados del html
     //borramos el tablero actual
     while (tablero.firstChild) {
-        tablero.firstChild.addEventListener("contextmenu",marcar);
-        tablero.firstChild.addEventListener("click", destapar);
+        tablero.firstChild.removeEventListener("contextmenu",marcar);// teniamos addEventListener
+        tablero.firstChild.removeEventListener("click",destapar); // teniamos addEventListener
         tablero.removeChild(tablero.firstChild);
-
     }
 
     // el problema de que se repita un monton de filas viene de aqui
@@ -31,11 +30,11 @@ function pintarTablero(){
         for (let c = 0; c < buscaminas.numColumnas; c++) {
             let newDiv = document.createElement("div");
 
-            newDiv.setAttribute("id","f", + f + "_c" + c);
+            newDiv.setAttribute("id","f" + f + "_c" + c );
             newDiv.dataset.fila = f;
             newDiv.dataset.columna = c;
             newDiv.addEventListener("contextmenu",marcar);//evento con el boton derecho del raton
-            newDiv.addEventListener("click", destapar);//evento con el boton izquierdo del raton
+            newDiv.addEventListener("click",destapar);//evento con el boton izquierdo del raton
             tablero.appendChild(newDiv);
         }
     }
@@ -50,7 +49,6 @@ function generarCampoMinasVacio(){
         buscaminas.aCampoMinas[fila] = new Array(buscaminas.numColumnas);
     }
 }
-
 
 function esparcirMinas(){
     //repartimos de forma aleatoria las minas
@@ -95,9 +93,11 @@ function contarMinasAlrededorCasilla(fila,columna){
             }
         }
     }
+
     //y guardamos cuantas minas hay en esa posicion
     buscaminas.aCampoMinas[fila][columna] = numeroMinasAlrededor;
 }
+
 
 
 function contarMinas(){
@@ -114,6 +114,7 @@ function contarMinas(){
 
 
 
+
 function marcar(miEvento){
     if (miEvento.type === "contextmenu"){
         console.log(miEvento);
@@ -126,8 +127,8 @@ function marcar(miEvento){
         miEvento.preventDefault();
 
         //obtenemos la fila de las propiedades dataset.
-        let fila = casilla.dataset.fila;
-        let columna = casilla.dataset.columna;
+        let fila = parseInt(casilla.dataset.fila,0);
+        let columna = parseInt(casilla.dataset.columna,0);
         
         if (fila>=0 && columna>=0 && fila< buscaminas.numFilas && columna < buscaminas.numColumnas) {
             //si esta marcada como "bandera"
@@ -148,11 +149,13 @@ function marcar(miEvento){
                 buscaminas.numMinasEncontradas++;
                 //si es igual al numero de minas totales resolvemos el tablero para ver si esta bien
                 if (buscaminas.numMinasEncontradas == buscaminas.numMinasTotales){
-                    buscaminas.resolverTablero(true);
+                    resolverTablero(true);
                 }
-             //actualizamos la barra de estado con el numero de minas restantes
-             actualizarNumMinasRestantes();
+             
             }
+            //actualizamos la barra de estado con el numero de minas restantes
+            actualizarNumMinasRestantes();
+            
         }
     }
 }
@@ -160,8 +163,8 @@ function marcar(miEvento){
 function destapar(miEvento){
     if (miEvento.type === "click"){
         let casilla = miEvento.currentTarget;
-        let fila = casilla.dataset.fila;
-        let columna = casilla.dataset.columna;
+        let fila = parseInt(casilla.dataset.fila,0);
+        let columna = parseInt(casilla.dataset.columna,0);
 
         destaparCasilla(fila,columna);
     }
@@ -169,12 +172,12 @@ function destapar(miEvento){
 
 // Esta funcion se encarga de llamar la funcion destapar
 function destaparCasilla(fila, columna){
-    console.log("destapamos la casilla con fila " + fila + " y columna " +columna );
-
+    
     //si la casilla esta dentro del tablero
     if (fila > -1 && fila < buscaminas.numFilas &&
         columna >-1 && columna < buscaminas.numColumnas){
-
+            
+    console.log("destapamos la casilla con fila " + fila + " y columna " +columna );
         //obtenermos la casilla con la fila y columna
         let casilla = document.querySelector("#f" + fila + "_c" + columna);
 
@@ -229,42 +232,55 @@ function destaparCasilla(fila, columna){
 }
 
 
-function resolverTablero(isOK){
+function resolverTablero(isOK) {
+    let mensajeFelicidades = document.getElementById("mensajeFelicidades");
+    let btnReset = document.getElementById("btnReset");
+    let fireworksContainer = document.getElementById("fireworksContainer");
+
     let aCasillas = tablero.children;
-    for (let i = 0 ; i < aCasillas.length; i++){
-        //quitamos los listeners de los eventos a las casillas
+    for (let i = 0; i < aCasillas.length; i++) {
+        // Quitamos los listeners de los eventos a las casillas
         aCasillas[i].removeEventListener("click", destapar);
         aCasillas[i].removeEventListener("contextmenu", marcar);
 
-        let fila = parseInt(aCasillas[i].dataset.fila,10);
-        let columna = parseInt(aCasillas[i].dataset.columna,10);
+        let fila = parseInt(aCasillas[i].dataset.fila, 0);
+        let columna = parseInt(aCasillas[i].dataset.columna, 0);
 
-        if (aCasillas[i].classList.contains("icon-bandera")){
-            if (buscaminas.aCampoMinas[fila][columna] == "B"){
-                //bandera correcta
+        if (aCasillas[i].classList.contains("icon-bandera")) {
+            if (buscaminas.aCampoMinas[fila][columna] == "B") {
+                // Bandera correcta
                 aCasillas[i].classList.add("destapado");
                 aCasillas[i].classList.remove("icon-bandera");
                 aCasillas[i].classList.add("icon-bomba");
             } else {
-                //bandera erronea
+                // Bandera errónea
                 aCasillas[i].classList.add("destapado");
                 aCasillas[i].classList.add("banderaErronea");
                 isOK = false;
             }
-        } else if (!aCasillas[i].classList.contains("destapado")){
-            if (buscaminas.aCampoMinas[fila][columna] == "B"){
-                //destapamos el resto de las bombas
+        } else if (!aCasillas[i].classList.contains("destapado")) {
+            if (buscaminas.aCampoMinas[fila][columna] == "B") {
+                // Destapamos el resto de las bombas
                 aCasillas[i].classList.add("destapado");
                 aCasillas[i].classList.add("icon-bomba");
             }
         }
-
     }
 
-    if (isOK){
-        alert("¡¡¡Enhorabuena!!!");
+    if (isOK) {
+        // Mostrar el mensaje de felicitación y el botón de reinicio
+        mensajeFelicidades.style.display = "block";
+        btnReset.style.display = "block";
+
+        // Ocultar el mensaje, el botón de reinicio y los fuegos artificiales después de 5 segundos
+        setTimeout(() => {
+            mensajeFelicidades.style.display = "none";
+            btnReset.style.display = "none";
+        }, 10000);
     }
 }
+
+
 
 
 function actualizarNumMinasRestantes(){
@@ -272,11 +288,38 @@ function actualizarNumMinasRestantes(){
         (buscaminas.numMinasTotales - buscaminas.numMinasEncontradas);
 }
 
-function inicio(){
+function reiniciarJuego() {
+    // Ocultar el mensaje de felicitación
+    let mensajeFelicidades = document.getElementById("mensajeFelicidades");
+    mensajeFelicidades.style.display = "none";
+
+    // Reiniciar el juego
+    inicio();
+}
+// Funcion iniciar el juego con parametros exactos (recordar cambiar los '0' en las partes de arriba )
+/* function inicio(){
     //RETOCAR (crear input interactivo / interfac )
-    buscaminas.numFilas = 10;
-    buscaminas.numColumnas = 10;
-    buscaminas.numMinasTotales = 12;
+    buscaminas.numFilas = 2;
+    buscaminas.numColumnas = 2;
+    buscaminas.numMinasTotales = 2;
+    pintarTablero();
+    generarCampoMinasVacio();
+    esparcirMinas();
+    contarMinas();
+    actualizarNumMinasRestantes();
+} */
+
+/* window.onload = inicio; */
+
+function inicio() {
+    let numFilasInput = document.getElementById("numFilas");
+    let numColumnasInput = document.getElementById("numColumnas");
+    let numMinasTotalesInput = document.getElementById("numMinasTotales");
+
+    buscaminas.numFilas = parseInt(numFilasInput.value, 10);
+    buscaminas.numColumnas = parseInt(numColumnasInput.value, 10);
+    buscaminas.numMinasTotales = parseInt(numMinasTotalesInput.value, 10);
+
     pintarTablero();
     generarCampoMinasVacio();
     esparcirMinas();
@@ -284,4 +327,4 @@ function inicio(){
     actualizarNumMinasRestantes();
 }
 
-window.onload = inicio;
+document.getElementById("iniciarJuego").addEventListener("click", inicio);
