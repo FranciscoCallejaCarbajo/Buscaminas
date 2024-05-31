@@ -1,3 +1,10 @@
+#cuerpo{
+background-image: url(/img/fondoComienzoJuego.png);
+display: flex;
+justify-content: center;
+}
+
+
 :root{
 	--num-columnas: 10;
 	--num-filas: 10;
