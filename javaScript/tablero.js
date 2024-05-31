@@ -326,6 +326,12 @@ function inicioBoton() {
     buscaminas.numColumnas = parseInt(numColumnasInput.value, 10);
     buscaminas.numMinasTotales = parseInt(numMinasTotalesInput.value, 10);
 
+        // Validar que el número de minas no sea mayor que el total de casillas
+        if (buscaminas.numMinasTotales >= (buscaminas.numFilas * buscaminas.numColumnas)/2) {
+            alert("El número de minas no puede ser mayor que la mitad del total de las casillas.");
+            return;
+        }
+
     pintarTablero();
     generarCampoMinasVacio();
     esparcirMinas();
