@@ -36,8 +36,8 @@
     }
 </style>
 <div id="container" >
-<a href="http://127.0.0.1:3000/html/tablero.html" style="color:rgb(82, 8, 151)"><h2 style="margin: 0; padding-top: 20px; margin-left: 18px; ">Buscaminas</h2></a>
-    <!-- <img src="/img/cuadroTxt.png" alt="Cuadro de Texto"> -->
+<a href="http://127.0.0.1:3000/html/tablero.html" style="color:rgb(82, 8, 151)"><h2 style="margin: 0; padding-top: 20px; margin-left: 18px;"><span class="hover-text">Buscaminas</h2></span></a>
+    <!-- <img src="/img/cuadroTxt.png" alt="Cuadro de Texto"> --><img src="../img/bomba.png" alt="Hover Image" class="">
 </div>
 <br>
 <br>
@@ -48,18 +48,25 @@
 <div id="container"><h2 style="margin: 0; padding-top: 20px; margin-left: 20px;">Tetris</h2>
 </div>
 <script>
-    // let i = 0;
-    var txt = 'Select a Game'
-    var speed = 900;
+let i = 0;
+var txt = 'Select a Game'
+var speed = 900;
 
 function typeWriter () {
     if (i <txt.length) {
         document.getElementById("texto").innerHTML += txt.charAt(i);
         i++;
         setTimeout(typeWriter, speed);
-    }
-}
-typeWriter();
-</script>
+    } else {
+                // Reset to repeat
+                setTimeout(() => {
+                    i = 0;
+                    document.getElementById("texto").innerHTML = '';
+                    typeWriter();
+                }, 2000); // Pause for 1 second before repeating
+            }
+        }
+        typeWriter();
+    </script>
 </body>
 </html>
