@@ -157,3 +157,19 @@ margin-top: 40px;
     padding: 20px;
     box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
 }
+
+#start-timer {
+    font-family: 'Press Start 2P', cursive;
+    border: none;
+    border-radius: 25px;
+    background-color: #00add6;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    font-size: 15px;
+    padding: 5px 10px;
+    position: absolute; /* Cambia a posición absoluta */
+    top: 45px; /* Ajusta la distancia desde la parte superior */
+    left: 10px; /* Ajusta la distancia desde el borde izquierdo */
+	margin-left:270px;
+}

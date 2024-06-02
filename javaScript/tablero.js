@@ -344,3 +344,32 @@ document.getElementById("iniciarJuego").addEventListener("click", inicioBoton);
 function myFunction() {
     document.getElementById("myForm").reset();
   }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    const startButton = document.getElementById('start-timer');
+
+    let segundos = 0; // Variable para almacenar el tiempo
+
+    // Función para actualizar el temporizador
+    function actualizarTemporizador() {
+        const minutos = Math.floor(segundos / 60); // Calcula los minutos
+        const segundosRestantes = segundos % 60; // Calcula los segundos restantes
+
+        // Formatea el tiempo en minutos y segundos
+        const tiempoFormateado = (minutos < 10 ? '0' : '') + minutos + ':' + (segundosRestantes < 10 ? '0' : '') + segundosRestantes;
+
+        startButton.textContent = tiempoFormateado; // Muestra el tiempo en el botón
+        segundos++; // Incrementa el tiempo en 1 segundo
+    }
+
+    // Evento de clic en el botón de inicio del temporizador
+    startButton.addEventListener('click', function() {
+        segundos = 0; // Establece el tiempo en 0
+        startButton.textContent = '00:00'; // Actualiza el botón con el tiempo inicial
+
+        // Inicia el temporizador actualizando cada segundo
+        setInterval(actualizarTemporizador, 1000);
+    });
+});
+
+
