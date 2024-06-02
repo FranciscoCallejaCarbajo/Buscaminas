@@ -2,6 +2,7 @@
 background-image: url(/img/fondoComienzoJuego.png);
 display: flex;
 justify-content: center;
+margin-top: 40px;
 }
 
 
@@ -11,6 +12,21 @@ justify-content: center;
 	--size: 32px;
 }
 
+.button {
+	background-color: #cd6dfe;
+	border: none;
+	border-radius: 25px;
+	color: white;
+	padding: 5px 20px;
+	text-align: center;
+	text-decoration: none;
+	font-family: 'Press Start 2P', cursive;
+	display: inline-block;
+	font-size: 15px;
+	margin: 4px 2px;
+	cursor: pointer;
+	margin-left: 105px;
+  }
 
 #tablero{
 	padding: 10px;

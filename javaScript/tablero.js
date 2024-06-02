@@ -340,3 +340,7 @@ function inicioBoton() {
 }
 
 document.getElementById("iniciarJuego").addEventListener("click", inicioBoton);
+
+function myFunction() {
+    document.getElementById("myForm").reset();
+  }

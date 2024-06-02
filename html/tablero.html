@@ -5,9 +5,19 @@
   <title>Buscaminas</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <link rel="stylesheet" href="/css/styleTablero.css">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
 <body id="cuerpo">
 
+<div class="contenedor-principal">
+
+<form id="myForm">
+input type="button" onclick="myFunction()" value="Reset">
+
+<div class="contenedor-2"><button class="button" id="reset-Button"><h2 style="text-align: center;">RESET
+</h2></form>
+</div>
+<br>
   <button id = "abrirJugarMas">Jugar con más casillas/Filas/Bombas</button>
   <div id="formContainer" class="hidden">
       <label for="numFilas">Número de Filas:</label>
@@ -24,12 +34,9 @@
     <div id="estado"><div>Nº de minas restante: <span id="numMinasRestantes"></sapn></div></div>
     <!-- Mensaje de felicitación -->
     <div id="mensajeFelicidades">
-      ¡¡¡Enhorabuena!!!
+      ¡¡¡Enhorabuena!!! Has ganado la partida.
+    </div> 
     </div>
-
-
-
-
     
     <script language="JavaScript" src="/javaScript/tablero.js"></script>
 </body>
