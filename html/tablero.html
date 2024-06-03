@@ -38,9 +38,12 @@
     <div id="tablero"></div>
     <div id="estado"><div>Nº de minas restante: <span id="numMinasRestantes"></sapn></div></div>
     <!-- Mensaje de felicitación -->
-    <div id="mensajeFelicidades">
-      ¡¡¡Enhorabuena!!! Has ganado la partida.
-    </div> 
+    <div id="myModal" class="modal">
+      <div class="modal-content">
+        <span class="close" id="closeModal">&times;</span>
+        <p>¡Felicidades! Has ganado el juego.</p>
+        <button id="btnResetModal" onclick="resetJuego()">Reiniciar Juego</button>
+      </div>
     </div>
     
     <script language="JavaScript" src="/javaScript/tablero.js"></script>

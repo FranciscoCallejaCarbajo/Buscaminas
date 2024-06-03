@@ -233,9 +233,9 @@ function destaparCasilla(fila, columna){
 
 
 function resolverTablero(isOK) {
-    let mensajeFelicidades = document.getElementById("mensajeFelicidades");
-    let btnReset = document.getElementById("btnReset");
-    let fireworksContainer = document.getElementById("fireworksContainer");
+    let modal = document.getElementById("myModal");
+    let span = document.getElementById("closeModal");
+    let btnResetModal = document.getElementById("btnResetModal");
 
     let aCasillas = tablero.children;
     for (let i = 0; i < aCasillas.length; i++) {
@@ -268,17 +268,27 @@ function resolverTablero(isOK) {
     }
 
     if (isOK) {
-        // Mostrar el mensaje de felicitación y el botón de reinicio
-        mensajeFelicidades.style.display = "block";
-        btnReset.style.display = "block";
+        // Mostrar el modal
+        modal.style.display = "block";
+    }
 
-        // Ocultar el mensaje, el botón de reinicio y los fuegos artificiales después de 5 segundos
-        setTimeout(() => {
-            mensajeFelicidades.style.display = "none";
-            btnReset.style.display = "none";
-        }, 10000);
+    // Cuando el usuario haga clic en <span> (x), cierra el modal
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    // Cuando el usuario haga clic en cualquier lugar fuera del modal, ciérralo
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
     }
 }
+
+function resetJuego() {
+    location.reload(); 
+}
+
 
 
 
