@@ -290,9 +290,9 @@ function resolverTablero(isOK) {
   };
 }
 
-function resetJuego() {
-  location.reload();
-}
+// function resetJuego() {
+//   location.reload();
+// }
 
 function actualizarNumMinasRestantes() {
   document.querySelector("#numMinasRestantes").innerHTML =
