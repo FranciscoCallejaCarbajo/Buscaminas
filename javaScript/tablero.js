@@ -18,7 +18,7 @@ function pintarTablero(){
     document.querySelector("html").style.setProperty("--num-columnas",buscaminas.numColumnas);
 
     //este while borra los div predeterminados del html
-    //borramos el tablero actual
+    //borramos el tablero actual 
     while (tablero.firstChild) {
         tablero.firstChild.removeEventListener("contextmenu",marcar);// teniamos addEventListener
         tablero.firstChild.removeEventListener("click",destapar); // teniamos addEventListener
@@ -317,7 +317,7 @@ document.getElementById("abrirJugarMas").addEventListener("click", function() {
 });
 
 function inicioBoton() {
-
+    if (buscaminas.numColumnas==0){location.reload()}else{
 // Obtener los campos de entrada por el click
     let numFilasInput = document.getElementById("numFilas");
     let numColumnasInput = document.getElementById("numColumnas");
@@ -327,11 +327,12 @@ function inicioBoton() {
     buscaminas.numMinasTotales = parseInt(numMinasTotalesInput.value, 10);
 
         // Validar que el número de minas no sea mayor que el total de casillas
+        
         if (buscaminas.numMinasTotales >= (buscaminas.numFilas * buscaminas.numColumnas)/2) {
             alert("El número de minas no puede ser mayor que la mitad del total de las casillas.");
             return;
         }
-
+        }
     pintarTablero();
     generarCampoMinasVacio();
     esparcirMinas();
@@ -339,7 +340,9 @@ function inicioBoton() {
     actualizarNumMinasRestantes();
 }
 
-document.getElementById("iniciarJuego").addEventListener("click", inicioBoton);
+document.getElementById("iniciarJuego1").addEventListener("click", inicioBoton);
+
+document.getElementById("iniciarJuego2").addEventListener("click", inicioBoton);
 
 function myFunction() {
     document.getElementById("myForm").reset();
