@@ -1,60 +1,75 @@
+// Definición del objeto buscaminas que almacenará la configuración y estado del juego
 const buscaminas = {
-  numMinasTotales: 0,
-  numMinasEncontradas: 0,
-  numFilas: 0,
-  numColumnas: 0,
-  aCampoMinas: [],
+  numMinasTotales: 0,       // Número total de minas en el tablero
+  numMinasEncontradas: 0,   // Número de minas encontradas y marcadas correctamente por el jugador
+  numFilas: 0,              // Número de filas del tablero de juego
+  numColumnas: 0,           // Número de columnas del tablero de juego
+  aCampoMinas: [],          // Matriz que representa el campo de juego, con información sobre las minas y las celdas
 };
 
+
 // Esta funcion crea el tablero automaticamente
+// Esta función crea el tablero automáticamente
 function pintarTablero() {
-  //obatiene el elemento del tablero por su id y lo guarda en la variable tablero
+  // Obtiene el elemento del tablero por su id y lo guarda en la variable 'tablero'
   let tablero = document.querySelector("#tablero");
 
-  //Con esto colocamos en las variables CSS lo que recibimos como parametros de entrada de la funcion
+  // Con esto colocamos en las variables CSS el número de filas y columnas del objeto 'buscaminas'
   document
     .querySelector("html")
     .style.setProperty("--num-filas", buscaminas.numFilas);
-  //el problema estaba aqui esque llamavamos el numero de filas y columnas pero no por el objeto si no con las variables que le habiamos metido a la funcion
   document
     .querySelector("html")
     .style.setProperty("--num-columnas", buscaminas.numColumnas);
 
-  //este while borra los div predeterminados del html
-  //borramos el tablero actual
+  // Este while borra los divs predeterminados del HTML
+  // Borramos el tablero actual
   while (tablero.firstChild) {
-    tablero.firstChild.removeEventListener("contextmenu", marcar); // teniamos addEventListener
-    tablero.firstChild.removeEventListener("click", destapar); // teniamos addEventListener
-    tablero.removeChild(tablero.firstChild);
+    // Elimina los eventos 'contextmenu' y 'click' de cada celda del tablero
+    tablero.firstChild.removeEventListener("contextmenu", marcar); 
+    tablero.firstChild.removeEventListener("click", destapar); 
+    tablero.removeChild(tablero.firstChild); // Elimina la celda del DOM
   }
 
-  // el problema de que se repita un monton de filas viene de aqui
+  // Creamos las celdas del tablero según el número de filas y columnas
   for (let f = 0; f < buscaminas.numFilas; f++) {
     for (let c = 0; c < buscaminas.numColumnas; c++) {
-      let newDiv = document.createElement("div");
+      let newDiv = document.createElement("div"); // Crea un nuevo div para cada celda
 
+      // Establece los atributos y dataset para identificar la fila y columna de cada celda
       newDiv.setAttribute("id", "f" + f + "_c" + c);
       newDiv.dataset.fila = f;
       newDiv.dataset.columna = c;
-      newDiv.addEventListener("contextmenu", marcar); //evento con el boton derecho del raton
-      newDiv.addEventListener("click", destapar); //evento con el boton izquierdo del raton
+
+      // Añade los eventos 'contextmenu' y 'click' a cada celda
+      newDiv.addEventListener("contextmenu", marcar); // Evento con el botón derecho del ratón
+      newDiv.addEventListener("click", destapar); // Evento con el botón izquierdo del ratón
+      
+      // Añade la celda al tablero
       tablero.appendChild(newDiv);
     }
   }
 }
 
+
 //Genera minas
 function generarCampoMinasVacio() {
+  // Verificamos si 'numFilas' no es NaN
   if (!Number.isNaN(buscaminas.numFilas)) {
-    //generamos el campo de minas en el objeto buscaminas
-    buscaminas.aCampoMinas = new Array(buscaminas.numFilas);
+    // Generamos el campo de minas en el objeto 'buscaminas'
+    buscaminas.aCampoMinas = new Array(buscaminas.numFilas); // Creamos un array con el número de filas
+
+    // Recorremos cada fila para crear un array de columnas
     for (let fila = 0; fila < buscaminas.numFilas; fila++) {
+      // Creamos un array para cada fila con el número de columnas
       buscaminas.aCampoMinas[fila] = new Array(buscaminas.numColumnas);
     }
   } else {
+    // Si 'numFilas' es NaN, recargamos la página
     location.reload();
   }
 }
+
 
 function esparcirMinas() {
   //repartimos de forma aleatoria las minas
@@ -81,29 +96,30 @@ function esparcirMinas() {
 function contarMinasAlrededorCasilla(fila, columna) {
   let numeroMinasAlrededor = 0;
 
-  //de la fila anterior a la posterior
+  // De la fila anterior a la posterior
   for (let zFila = fila - 1; zFila <= fila + 1; zFila++) {
-    //de la columna anterior a la posterior
+    // De la columna anterior a la posterior
     for (let zColumna = columna - 1; zColumna <= columna + 1; zColumna++) {
-      //si la casilla cae dentro del tablero
+      // Si la casilla cae dentro del tablero
       if (
         zFila > -1 &&
         zFila < buscaminas.numFilas &&
         zColumna > -1 &&
         zColumna < buscaminas.numColumnas
       ) {
-        //miramos si en esa posición hay bomba
+        // Miramos si en esa posición hay bomba
         if (buscaminas.aCampoMinas[zFila][zColumna] == "B") {
-          //y sumamos 1 al numero de minas que hay alrededor de esa casilla
+          // Y sumamos 1 al número de minas que hay alrededor de esa casilla
           numeroMinasAlrededor++;
         }
       }
     }
   }
 
-  //y guardamos cuantas minas hay en esa posicion
+  // Guardamos cuántas minas hay en esa posición
   buscaminas.aCampoMinas[fila][columna] = numeroMinasAlrededor;
 }
+
 
 function contarMinas() {
   //contamos cuantas minas hay alrededor de cada casilla
@@ -119,12 +135,12 @@ function contarMinas() {
 
 function marcar(miEvento) {
   if (miEvento.type === "contextmenu") {
-    console.log(miEvento);
+    console.log(miEvento); //quitar console es para ver si funcionaba
 
     //obtenemos el elemento que ha disparado el evento
     let casilla = miEvento.currentTarget;
 
-    //detenemos el burbujeo del evento y su accion por defecto
+    //detenemos el evento y su accion por defecto
     miEvento.stopPropagation();
     miEvento.preventDefault();
 
@@ -166,14 +182,20 @@ function marcar(miEvento) {
 }
 
 function destapar(miEvento) {
+  // Verificamos si el tipo de evento es "click"
   if (miEvento.type === "click") {
+    // Obtenemos el elemento que ha disparado el evento
     let casilla = miEvento.currentTarget;
+
+    // Obtenemos las coordenadas de la casilla a partir de sus atributos dataset
     let fila = parseInt(casilla.dataset.fila, 0);
     let columna = parseInt(casilla.dataset.columna, 0);
 
+    // Llamamos a la función destaparCasilla con las coordenadas de la casilla
     destaparCasilla(fila, columna);
   }
 }
+
 
 // Esta funcion se encarga de llamar la funcion destapar
 function destaparCasilla(fila, columna) {
@@ -238,32 +260,38 @@ function destaparCasilla(fila, columna) {
 }
 
 function resolverTablero(isOK) {
+  // Obtener los elementos del modal y los botones de cierre y reinicio
   let modal = document.getElementById("myModal");
   let span = document.getElementById("closeModal");
   let btnResetModal = document.getElementById("btnResetModal");
 
+  // Obtener todas las casillas del tablero
   let aCasillas = tablero.children;
   for (let i = 0; i < aCasillas.length; i++) {
     // Quitamos los listeners de los eventos a las casillas
     aCasillas[i].removeEventListener("click", destapar);
     aCasillas[i].removeEventListener("contextmenu", marcar);
 
+    // Obtener las coordenadas de la casilla
     let fila = parseInt(aCasillas[i].dataset.fila, 0);
     let columna = parseInt(aCasillas[i].dataset.columna, 0);
 
+    // Si la casilla tiene una bandera
     if (aCasillas[i].classList.contains("icon-bandera")) {
+      // Verificar si la bandera está en una bomba
       if (buscaminas.aCampoMinas[fila][columna] == "B") {
-        // Bandera correcta
+        // Bandera correcta: destapar la casilla, quitar la bandera y marcar la bomba
         aCasillas[i].classList.add("destapado");
         aCasillas[i].classList.remove("icon-bandera");
         aCasillas[i].classList.add("icon-bomba");
       } else {
-        // Bandera errónea
+        // Bandera errónea: marcar la casilla como errónea y actualizar isOK a false
         aCasillas[i].classList.add("destapado");
         aCasillas[i].classList.add("banderaErronea");
-        isOK = false;
+        isOK = false; // Indicar que el juego no se resolvió correctamente
       }
     } else if (!aCasillas[i].classList.contains("destapado")) {
+      // Si la casilla no está destapada y contiene una bomba
       if (buscaminas.aCampoMinas[fila][columna] == "B") {
         // Destapamos el resto de las bombas
         aCasillas[i].classList.add("destapado");
@@ -272,8 +300,8 @@ function resolverTablero(isOK) {
     }
   }
 
+  // Mostrar el modal si el juego se resolvió correctamente
   if (isOK) {
-    // Mostrar el modal
     modal.style.display = "block";
   }
 
@@ -290,70 +318,97 @@ function resolverTablero(isOK) {
   };
 }
 
+
 // function resetJuego() {
 //   location.reload();
 // }
 
 function actualizarNumMinasRestantes() {
-  document.querySelector("#numMinasRestantes").innerHTML =
-    buscaminas.numMinasTotales - buscaminas.numMinasEncontradas;
+  // Seleccionamos el elemento con el id "numMinasRestantes" en el documento
+  let elementoNumMinasRestantes = document.querySelector("#numMinasRestantes");
+
+  // Calculamos el número de minas restantes restando las minas encontradas del total de minas
+  let numMinasRestantes = buscaminas.numMinasTotales - buscaminas.numMinasEncontradas;
+
+  // Actualizamos el contenido HTML del elemento seleccionado con el número de minas restantes
+  elementoNumMinasRestantes.innerHTML = numMinasRestantes;
 }
 
+
 function reiniciarJuego() {
-  // Ocultar el mensaje de felicitación
+  // Ocultar el mensaje de felicitación al reiniciar el juego
   let mensajeFelicidades = document.getElementById("mensajeFelicidades");
   mensajeFelicidades.style.display = "none";
 
-  // Reiniciar el juego
+  // Reiniciar el juego llamando a la función inicio()
   inicio();
 }
+
 // Funcion iniciar el juego con parametros exactos (Si quisieramos cambiar los parametros para que salga de otro tamaño cambiarlos aqui...)
 function inicio() {
+  // Establecer las dimensiones y la cantidad de minas del tablero
   buscaminas.numFilas = 10;
   buscaminas.numColumnas = 10;
   buscaminas.numMinasTotales = 12;
+
+  // Pintar el tablero en la interfaz gráfica
   pintarTablero();
+
+  // Generar un campo de minas vacío
   generarCampoMinasVacio();
+
+  // Esparcir las minas en el campo de minas
   esparcirMinas();
+
+  // Contar el número de minas alrededor de cada casilla
   contarMinas();
+
+  // Actualizar el número de minas restantes en la interfaz gráfica
   actualizarNumMinasRestantes();
 }
+
 
 window.onload = inicio;
 
 // Esto es para el boton de jugar con mas celdas etc
 
+// Selecciona el elemento con el id "abrirJugarMas" y agrega un evento de clic
 document.getElementById("abrirJugarMas").addEventListener("click", function () {
+  // Selecciona el contenedor del formulario con el id "formContainer" y alterna la clase "hidden" para mostrar u ocultar el formulario
   document.getElementById("formContainer").classList.toggle("hidden");
 });
 
+
 function inicioBoton() {
-  if (buscaminas.numColumnas == NaN || buscaminas.numFilas == NaN) {
+  // Verificar si el número de filas o columnas es NaN (Not a Number)
+  if (isNaN(buscaminas.numColumnas) || isNaN(buscaminas.numFilas)) {
+    // Recargar la página si el número de filas o columnas no es un número válido
     location.reload();
   } else {
-    // Obtener los campos de entrada por el click
-    let numFilasInput = 10;
-    let numColumnasInput = 10;
-    let numMinasTotalesInput = 12;
-    numFilasInput = document.getElementById("numFilas");
-    numColumnasInput = document.getElementById("numColumnas");
-    numMinasTotalesInput = document.getElementById("numMinasTotales");
+    // Obtener los campos de entrada para el número de filas, columnas y minas
+    let numFilasInput = document.getElementById("numFilas");
+    let numColumnasInput = document.getElementById("numColumnas");
+    let numMinasTotalesInput = document.getElementById("numMinasTotales");
+
+    // Actualizar el número de filas, columnas y minas del buscaminas con los valores introducidos en los campos de entrada
     buscaminas.numFilas = parseInt(numFilasInput.value ?? 0, 10);
     buscaminas.numColumnas = parseInt(numColumnasInput.value, 10);
     buscaminas.numMinasTotales = parseInt(numMinasTotalesInput.value, 10);
 
-    // Validar que el número de minas no sea mayor que el total de casillas
-
+    // Validar que el número de minas no sea mayor que la mitad del total de casillas
     if (
       buscaminas.numMinasTotales >=
       (buscaminas.numFilas * buscaminas.numColumnas) / 2
     ) {
+      // Mostrar una alerta si el número de minas es mayor o igual a la mitad del total de casillas
       alert(
         "El número de minas no puede ser mayor que la mitad del total de las casillas."
       );
-      return;
+      return; // Salir de la función si hay un error
     }
   }
+
+  // Ejecutar las funciones para iniciar el juego
   pintarTablero();
   generarCampoMinasVacio();
   esparcirMinas();
@@ -361,42 +416,50 @@ function inicioBoton() {
   actualizarNumMinasRestantes();
 }
 
+// Agregar eventos de clic para iniciar el juego al hacer clic en los botones correspondientes
 document.getElementById("iniciarJuego1").addEventListener("click", inicioBoton);
-
 document.getElementById("iniciarJuego2").addEventListener("click", inicioBoton);
 
+
 function myFunction() {
+  // Selecciona el formulario con el id "myForm" y lo resetea, lo que restablece todos los campos de entrada a sus valores por defecto
   document.getElementById("myForm").reset();
 }
 
+
+// Espera a que el DOM esté completamente cargado antes de ejecutar el código
 document.addEventListener("DOMContentLoaded", function () {
+  // Obtén el botón de inicio del temporizador por su ID
   const startButton = document.getElementById("start-timer");
 
-  let segundos = 0; // Variable para almacenar el tiempo
+  let segundos = 0; // Variable para almacenar el tiempo en segundos
 
   // Función para actualizar el temporizador
   function actualizarTemporizador() {
-    const minutos = Math.floor(segundos / 60); // Calcula los minutos
-    const segundosRestantes = segundos % 60; // Calcula los segundos restantes
+    // Calcula los minutos a partir de los segundos almacenados
+    const minutos = Math.floor(segundos / 60);
+    // Calcula los segundos restantes
+    const segundosRestantes = segundos % 60;
 
-    // Formatea el tiempo en minutos y segundos
+    // Formatea el tiempo en minutos y segundos con ceros a la izquierda si es necesario
     const tiempoFormateado =
-      (minutos < 10 ? "0" : "") +
-      minutos +
-      ":" +
-      (segundosRestantes < 10 ? "0" : "") +
-      segundosRestantes;
+      (minutos < 10 ? "0" : "") + minutos + ":" + (segundosRestantes < 10 ? "0" : "") + segundosRestantes;
 
-    startButton.textContent = tiempoFormateado; // Muestra el tiempo en el botón
-    segundos++; // Incrementa el tiempo en 1 segundo
+    // Muestra el tiempo formateado en el botón de inicio del temporizador
+    startButton.textContent = tiempoFormateado;
+
+    // Incrementa la variable de segundos para reflejar el tiempo transcurrido
+    segundos++;
   }
 
-  // Evento de clic en el botón de inicio del temporizador
+  // Agrega un evento de clic al botón de inicio del temporizador
   startButton.addEventListener("click", function () {
-    segundos = 0; // Establece el tiempo en 0
-    startButton.textContent = "00:00"; // Actualiza el botón con el tiempo inicial
+    // Reinicia el tiempo a cero
+    segundos = 0;
+    // Actualiza el contenido del botón con el tiempo inicial "00:00"
+    startButton.textContent = "00:00";
 
-    // Inicia el temporizador actualizando cada segundo
+    // Inicia el temporizador actualizando la función de actualización cada segundo (1000 milisegundos)
     setInterval(actualizarTemporizador, 1000);
   });
 });
